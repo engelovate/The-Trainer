@@ -4,7 +4,7 @@ import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/1
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "",
+  apiKey: "AIzaSyCdgg8CIYQ4dE9JWd-0GIPilkxue89p7I4",
   authDomain: "userverblist.firebaseapp.com",
   projectId: "userverblist",
   storageBucket: "userverblist.firebasestorage.app",
@@ -38,4 +38,5 @@ onAuthStateChanged(auth, (user) => {
     document.dispatchEvent(new CustomEvent("firebaseReady"));
   }
 });
+
 
