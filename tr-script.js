@@ -452,26 +452,6 @@ function initSavedCarouselLoop() {
   });
 }
 
-// function saveToFirebase() {
-//   if (!window.firebaseUserId || !window.firebaseDb) return;
-//   const userRef = window.firebaseDb.ref(`users/${window.firebaseUserId}/savedVerbs`);
-//   window.firebaseDb.ref(`users/${window.firebaseUserId}/savedVerbs`).set(savedVerbs);
-// }
-
-// function loadFromFirebase() {
-//   if (!window.firebaseUserId || !window.firebaseDb) return;
-//   const dbRef = window.firebaseDb.ref(`users/${window.firebaseUserId}/savedVerbs`);
-//   dbRef.get().then((snapshot) => {
-//     if (snapshot.exists()) {
-//       savedVerbs = snapshot.val();
-//       updateSavedGrid();
-//     }
-//   });
-// }
-
-// document.addEventListener("firebaseReady", () => {
-//   loadFromFirebase();
-// });
 
 function saveToFirebase() {
   if (!window.firebaseUserId || !window.firebaseDb) return;
@@ -497,8 +477,51 @@ function loadFromFirebase() {
 }
 
 document.querySelector(".quickAccessLearn").addEventListener("click", () => {
-  loadFromFirebase();
+  const win = window.open("", "_blank"); 
+
+  if (!window.firebaseUserId || !window.firebaseDb) {
+    win.document.write("<p>Firebase not ready.</p>");
+    return;
+  }
+
+  const path = `users/${window.firebaseUserId}/savedVerbs`;
+  const dbRef = window.firebaseRef(window.firebaseDb, path);
+
+  window.firebaseGet(dbRef).then(snapshot => {
+    if (snapshot.exists()) {
+      const savedVerbs = snapshot.val();
+
+      let html = `
+        <html>
+          <head>
+            <title>My Learning List</title>
+            <style>
+              body { font-family: sans-serif; padding: 20px; }
+              h2 { color: #66023c; }
+              li { margin-bottom: 5px; font-size: 1rem; }
+            </style>
+          </head>
+          <body>
+            <h2>Your Saved Verbs</h2>
+            <ul>
+              ${savedVerbs.map(v => `<li>${v.base} – ${v.past} – ${v.participle}</li>`).join("")}
+            </ul>
+          </body>
+        </html>
+      `;
+
+      win.document.open();
+      win.document.write(html);
+      win.document.close();
+    } else {
+      win.document.write("<p>No saved verbs found.</p>");
+    }
+  }).catch(err => {
+    console.error("Firebase load error:", err);
+    win.document.write("<p>Error loading data from Firebase.</p>");
+  });
 });
+
 
 document.addEventListener("firebaseReady", () => {
   console.log("Firebase ready, user:", window.firebaseUserId);
