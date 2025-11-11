@@ -3,17 +3,6 @@ const SHEET_ID = "1evNm8Cyj-P2_ful3lt5mT5Bu0aLZWaCYIKNmFtO_PSw";
 const SHEET_GID = "0"; 
 const GOOGLE_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1evNm8Cyj-P2_ful3lt5mT5Bu0aLZWaCYIKNmFtO_PSw/gviz/tq?tqx=out:csv&gid=0";
 
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional:: FirebaseUser
-// const firebaseConfig = {
-//   apiKey: "AIzaSyCdgg8CIYQ4dE9JWd-0GIPilkxue89p7I4",
-//   authDomain: "userverblist.firebaseapp.com",
-//   projectId: "userverblist",
-//   storageBucket: "userverblist.firebasestorage.app",
-//   messagingSenderId: "521364046945",
-//   appId: "1:521364046945:web:1a056ba340fc7356431620",
-//   measurementId: "G-PP7JFH35HW"
-// };
-
 // ===== STATE =====
 let verbs = [];            // all verbs from Excel
 let pool = [];             // filtered by CEFR
@@ -462,27 +451,6 @@ function initSavedCarouselLoop() {
     }
   });
 }
-
-// function saveToFirebase() {
-//   if (!window.firebaseUserId || !window.firebaseDb) return;
-//   const userRef = window.firebaseDb.ref(`users/${window.firebaseUserId}/savedVerbs`);
-//   window.firebaseDb.ref(`users/${window.firebaseUserId}/savedVerbs`).set(savedVerbs);
-// }
-
-// function loadFromFirebase() {
-//   if (!window.firebaseUserId || !window.firebaseDb) return;
-//   const dbRef = window.firebaseDb.ref(`users/${window.firebaseUserId}/savedVerbs`);
-//   dbRef.get().then((snapshot) => {
-//     if (snapshot.exists()) {
-//       savedVerbs = snapshot.val();
-//       updateSavedGrid();
-//     }
-//   });
-// }
-
-// document.addEventListener("firebaseReady", () => {
-//   loadFromFirebase();
-// });
 
 function saveToFirebase() {
   if (!window.firebaseUserId || !window.firebaseDb) return;
